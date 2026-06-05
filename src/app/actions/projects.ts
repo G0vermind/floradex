@@ -37,7 +37,7 @@ export async function toggleProjectStatus(id: string) {
       data: { isActive: !p.isActive }
     })
     revalidatePath('/admin/projects')
-    revalidatePath('/leafpass/redeem')
+    revalidatePath('/app/redeem')
   }
 }
 
@@ -85,8 +85,8 @@ export async function redeemProject(projectId: string) {
       return record
     })
 
-    revalidatePath('/leafpass')
-    revalidatePath('/leafpass/redeem')
+    revalidatePath('/app')
+    revalidatePath('/app/redeem')
     
     return { success: true, voucherCode: result.voucherCode, projectName: (await prisma.socialProject.findUnique({where: {id: projectId}}))?.title }
   } catch (error: any) {

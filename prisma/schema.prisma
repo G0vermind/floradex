@@ -76,6 +76,11 @@ model User {
   claimCodes    ClaimCode[]
   scanLogs      ScanLog[]
   redemptions   CampaignRedemption[]
+
+  // Relações de gamificação
+  achievements  UserAchievement[]
+  userMissions  UserMission[]
+  projectRedemptions RedemptionHistory[]
 }
 
 // ─────────────────────────────────────────
@@ -176,4 +181,100 @@ model CampaignRedemption {
 
   user     User     @relation(fields: [userId], references: [id])
   campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+}
+
+// ─────────────────────────────────────────
+// SISTEMA DE GAMIFICAÇÃO
+// ─────────────────────────────────────────
+
+model AchievementDefinition {
+  id             String   @id @default(cuid())
+  slug           String   @unique              // "ajudante-natureza"
+  name           String                        // "Ajudante da Natureza"
+  description    String                        // "Visite viveiros..."
+  icon           String   @default("🌱")       // Emoji
+  category       String                        // VISITA | SOCIAL | COLETA | ESPECIAL
+  tierThresholds String   @default("[1,5,20,50,100,200,350,500,750,1000]") // JSON int array
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+
+  userAchievements UserAchievement[]
+}
+
+model UserAchievement {
+  id              String   @id @default(cuid())
+  userId          String
+  achievementId   String
+  currentProgress Int      @default(0)
+  currentTier     Int      @default(0)         // 0=nenhum … 10=Diamante
+  unlockedAt      DateTime @default(now())
+  lastProgressAt  DateTime @default(now())
+
+  user        User                  @relation(fields: [userId], references: [id])
+  achievement AchievementDefinition @relation(fields: [achievementId], references: [id])
+
+  @@unique([userId, achievementId])
+}
+
+model Mission {
+  id                    String    @id @default(cuid())
+  title                 String                         // "Visite 3 parceiros esta semana"
+  description           String
+  icon                  String    @default("🎯")
+  type                  String                         // DAILY | WEEKLY | SPECIAL
+  requirementAction     String                         // scan | redeem | visit_unique
+  requirementCount      Int       @default(1)
+  rewardLeafs           Float     @default(0)
+  rewardAchievementSlug String?                        // Slug do achievement que progride
+  expiresAt             DateTime?
+  isActive              Boolean   @default(true)
+  createdAt             DateTime  @default(now())
+
+  userMissions UserMission[]
+}
+
+model UserMission {
+  id          String    @id @default(cuid())
+  userId      String
+  missionId   String
+  progress    Int       @default(0)
+  isCompleted Boolean   @default(false)
+  completedAt DateTime?
+  claimedAt   DateTime?                                // null = recompensa não coletada
+  startedAt   DateTime  @default(now())
+
+  user    User    @relation(fields: [userId], references: [id])
+  mission Mission @relation(fields: [missionId], references: [id])
+
+  @@unique([userId, missionId])
+}
+
+// ─────────────────────────────────────────
+// PROJETOS SOCIAIS / VITRINE DE RESGATE
+// ─────────────────────────────────────────
+
+model SocialProject {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  costInLeafs Float
+  imageUrl    String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  redemptions RedemptionHistory[]
+}
+
+model RedemptionHistory {
+  id          String   @id @default(cuid())
+  userId      String
+  projectId   String
+  amountPaid  Float
+  voucherCode String
+  status      String   @default("PENDING") // PENDING | COMPLETED | CANCELLED
+  createdAt   DateTime @default(now())
+
+  user    User          @relation(fields: [userId], references: [id])
+  project SocialProject @relation(fields: [projectId], references: [id])
 }

@@ -43,6 +43,7 @@ export default function PassportPage({
           borderRadius: '8px',
           padding: '1.5rem',
           minHeight: '360px',
+          background: 'var(--leaf-cream)',
         }}
       >
         {/* Page header */}
@@ -55,16 +56,14 @@ export default function PassportPage({
           }}
         >
           <span
-            className="font-mono"
-            style={{ fontSize: '0.65rem', letterSpacing: '0.12em', color: 'var(--leaf-ink-faded)', textTransform: 'uppercase' }}
+            style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.143px', color: 'rgba(0,0,0,0.4)', textTransform: 'uppercase', fontWeight: 600 }}
           >
-            LeafPass
+            LEAFPASS
           </span>
           <span
-            className="font-mono"
-            style={{ fontSize: '0.65rem', color: 'var(--leaf-ink-faded)', letterSpacing: '0.08em' }}
+            style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', color: 'rgba(0,0,0,0.4)', letterSpacing: '0.143px', fontWeight: 600 }}
           >
-            PÁG. {pageNumber} / {totalPages}
+            PAGE {pageNumber} / {totalPages}
           </span>
         </div>
 

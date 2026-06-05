@@ -160,7 +160,7 @@ export default function ScanPage() {
         }}
       >
         <Link
-          href="/leafpass"
+          href="/app"
           className="btn-ghost"
           style={{ fontSize: '0.9rem', padding: '0.5rem 0.875rem' }}
           onClick={stopScanner}
@@ -366,8 +366,8 @@ export default function ScanPage() {
                   </p>
                 )}
 
-                <Link href="/leafpass" className="btn-primary" style={{ display: 'inline-flex' }}>
-                  Ver meu Passaporte
+                <Link href="/app" className="btn-primary" style={{ display: 'inline-flex' }}>
+                  Voltar ao Passaporte
                 </Link>
 
                 {/* Vitrine B2B */}
@@ -407,8 +407,8 @@ export default function ScanPage() {
                 <button id="btn-retry-scan" onClick={() => setScanState('idle')} className="btn-primary">
                   Tentar novamente
                 </button>
-                <Link href="/leafpass" className="btn-ghost">
-                  Voltar
+                <Link href="/app" className="btn-ghost">
+                  Voltar ao Passaporte
                 </Link>
               </div>
             </motion.div>

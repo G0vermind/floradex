@@ -3,7 +3,7 @@ import { headers } from 'next/headers'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import { generateMonthlySecret, makeDeviceHash } from '@/lib/crypto'
-
+import { processGamificationOnScan } from '@/lib/gamification'
 export async function POST(request: NextRequest) {
   const session = await auth()
   if (!session?.user?.id) {
@@ -164,6 +164,15 @@ export async function POST(request: NextRequest) {
       data: { offChainLeafs: { increment: company.rewardAmount } },
     }),
   ])
+
+  // Process Gamification
+  const totalVisitsHere = await prisma.scanLog.count({
+    where: { userId: userId, companyId: company.id }
+  })
+  const isFirstVisitAtCompany = totalVisitsHere === 1 // because we just added one
+
+  // Disparar processamento assíncrono de gamificação para não travar a requisição
+  processGamificationOnScan(userId, company.id, isFirstVisitAtCompany)
 
   return Response.json({
     success: true,

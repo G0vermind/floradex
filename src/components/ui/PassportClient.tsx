@@ -1,10 +1,15 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import PassportPage, { type StampData } from '@/components/ui/PassportPage'
 import { logout } from '@/app/actions/auth'
+import type { StampData } from '@/components/ui/PassportPage'
+import PassportCover from './passport/PassportCover'
+import PassportTabs, { type PassportSection } from './passport/PassportTabs'
+import StampCollection from './passport/StampCollection'
+import TrophyCard, { type TrophyData } from './passport/TrophyCard'
+import MissionCard, { type MissionData } from './passport/MissionCard'
 
 interface PassportClientProps {
   user: {
@@ -16,28 +21,54 @@ interface PassportClientProps {
   stamps: StampData[]
 }
 
-const CELLS_PER_PAGE = 12
-
 export default function PassportClient({ user, stamps }: PassportClientProps) {
-  const totalPages = Math.max(1, Math.ceil((stamps.length + 1) / CELLS_PER_PAGE))
-  const [page, setPage] = useState(0)
-  const [direction, setDirection] = useState(0)
+  const [isOpen, setIsOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState<PassportSection>('stamps')
+  const [achievements, setAchievements] = useState<TrophyData[]>([])
+  const [missions, setMissions] = useState<MissionData[]>([])
+  const [isLoadingData, setIsLoadingData] = useState(false)
 
-  const goNext = () => {
-    if (page < totalPages - 1) {
-      setDirection(1)
-      setPage((p) => p + 1)
+  // Fetch gamification data when passport opens
+  useEffect(() => {
+    if (isOpen && achievements.length === 0 && missions.length === 0) {
+      setIsLoadingData(true)
+      Promise.all([
+        fetch('/api/leafpass/achievements').then(res => res.json()),
+        fetch('/api/leafpass/missions').then(res => res.json())
+      ]).then(([achData, missData]) => {
+        if (Array.isArray(achData)) setAchievements(achData)
+        if (Array.isArray(missData)) setMissions(missData)
+        setIsLoadingData(false)
+      }).catch(err => {
+        console.error('Failed to load gamification data', err)
+        setIsLoadingData(false)
+      })
+    }
+  }, [isOpen]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleClaimMission = async (missionId: string) => {
+    try {
+      const res = await fetch('/api/leafpass/missions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ missionId }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setMissions(prev =>
+          prev.map(m =>
+            m.id === missionId
+              ? { ...m, claimedAt: new Date().toISOString() }
+              : m
+          )
+        )
+      }
+    } catch (err) {
+      console.error('Failed to claim mission', err)
     }
   }
 
-  const goPrev = () => {
-    if (page > 0) {
-      setDirection(-1)
-      setPage((p) => p - 1)
-    }
-  }
-
-  const pageStamps = stamps.slice(page * CELLS_PER_PAGE, (page + 1) * CELLS_PER_PAGE)
+  const unclaimedMissionsCount = missions.filter(m => m.isCompleted && !m.claimedAt).length
 
   return (
     <div
@@ -45,6 +76,8 @@ export default function PassportClient({ user, stamps }: PassportClientProps) {
         minHeight: '100dvh',
         paddingBottom: '7rem',
         position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
       {/* Header */}
@@ -59,19 +92,21 @@ export default function PassportClient({ user, stamps }: PassportClientProps) {
           zIndex: 40,
         }}
       >
-        <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div className="container-lg" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div>
             <h1
-              className="font-serif text-gold-gradient"
-              style={{ fontSize: '1.4rem', fontWeight: 700, letterSpacing: '0.05em', lineHeight: 1.1 }}
+              className="text-gold-gradient"
+              style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', fontWeight: 700, letterSpacing: '0.05em', lineHeight: 1.1 }}
             >
               🌿 LeafPass
             </h1>
+            <Link href="/" style={{ fontSize: '12px', color: 'rgba(245,240,232,0.6)', textDecoration: 'none', display: 'block', marginTop: '2px' }}>
+              ← Site Institucional
+            </Link>
             <p
-              className="font-mono"
-              style={{ fontSize: '0.7rem', color: 'rgba(245,240,232,0.5)', letterSpacing: '0.08em', marginTop: '2px' }}
+              style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'rgba(245,240,232,0.5)', letterSpacing: '0.08em', marginTop: '2px', textTransform: 'uppercase' }}
             >
-              {user.name.toUpperCase()}
+              {user.name}
             </p>
           </div>
 
@@ -82,127 +117,187 @@ export default function PassportClient({ user, stamps }: PassportClientProps) {
             <form action={logout}>
               <button
                 type="submit"
-                className="btn-ghost"
-                style={{ fontSize: '0.8rem', padding: '0.4rem 0.75rem' }}
+                style={{ 
+                  background: 'transparent',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  color: 'white',
+                  padding: '6px 12px', 
+                  fontSize: '12px', 
+                  borderRadius: '4px', 
+                  fontFamily: 'var(--font-sans)',
+                  cursor: 'pointer'
+                }}
               >
-                Sair
+                SAIR
               </button>
             </form>
           </div>
         </div>
       </header>
 
-      {/* Passport body */}
-      <div className="container" style={{ paddingTop: '1.5rem' }}>
-        {/* Folhas summary */}
-        <div
-          className="glass-card"
-          style={{
-            padding: '1rem 1.25rem',
-            marginBottom: '1.25rem',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <div>
-            <p className="font-mono" style={{ fontSize: '0.7rem', color: 'rgba(245,240,232,0.5)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-              Folhas acumuladas
-            </p>
-            <p className="font-serif" style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--leaf-gold-light)', lineHeight: 1.1 }}>
-              🍃 {Math.round(user.offChainLeafs)}
-            </p>
-          </div>
-          <div style={{ textAlign: 'right' }}>
-            <p className="font-mono" style={{ fontSize: '0.7rem', color: 'rgba(245,240,232,0.5)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-              Carimbos
-            </p>
-            <p className="font-serif" style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--leaf-cream)', lineHeight: 1.1 }}>
-              {stamps.length}
-            </p>
-          </div>
-        </div>
-
-        {/* Passport book */}
-        <div className="passport-book" style={{ padding: '0.75rem 0.75rem 1.25rem' }}>
-          <div className="passport-spine" />
-          <div style={{ marginLeft: '16px' }}>
-            <AnimatePresence mode="wait" custom={direction}>
-              <PassportPage
-                key={page}
-                stamps={pageStamps}
-                pageNumber={page + 1}
-                totalPages={totalPages}
-                direction={direction}
+      {/* Main Content Area */}
+      <div className="container-lg" style={{ padding: '2rem 1rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <AnimatePresence mode="wait">
+          {!isOpen ? (
+            // CLOSED STATE (COVER)
+            <motion.div
+              key="closed"
+              exit={{ opacity: 0, scale: 0.9, rotateY: 90 }}
+              transition={{ duration: 0.4 }}
+              style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            >
+              <PassportCover
+                userName={user.name}
+                totalStamps={stamps.length}
+                onOpen={() => setIsOpen(true)}
               />
-            </AnimatePresence>
-          </div>
-        </div>
+            </motion.div>
+          ) : (
+            // OPEN STATE (PAGES)
+            <motion.div
+              key="open"
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              style={{ flex: 1, display: 'flex', flexDirection: 'column', maxWidth: '480px', margin: '0 auto', width: '100%' }}
+            >
+              {/* Back button */}
+              <button
+                onClick={() => setIsOpen(false)}
+                style={{ 
+                  alignSelf: 'flex-start', 
+                  marginBottom: '1.5rem', 
+                  padding: '8px 16px', 
+                  fontSize: '12px', 
+                  fontFamily: 'var(--font-sans)',
+                  background: 'transparent',
+                  border: 'none',
+                  color: 'white',
+                  cursor: 'pointer',
+                  opacity: 0.8
+                }}
+              >
+                ← FECHAR PASSAPORTE
+              </button>
 
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '1rem',
-              marginTop: '1rem',
-            }}
-          >
-            <button
-              onClick={goPrev}
-              disabled={page === 0}
-              className="btn-ghost"
-              style={{ fontSize: '1.25rem', padding: '0.375rem 0.875rem', opacity: page === 0 ? 0.3 : 1 }}
-            >
-              ←
-            </button>
-            <div style={{ display: 'flex', gap: '0.4rem' }}>
-              {Array.from({ length: totalPages }).map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => { setDirection(i > page ? 1 : -1); setPage(i) }}
-                  style={{
-                    width: '8px',
-                    height: '8px',
-                    borderRadius: '50%',
-                    border: 'none',
-                    cursor: 'pointer',
-                    background: i === page ? 'var(--leaf-gold)' : 'rgba(245,240,232,0.2)',
-                    transition: 'background 0.2s',
-                    padding: 0,
-                  }}
-                />
-              ))}
-            </div>
-            <button
-              onClick={goNext}
-              disabled={page === totalPages - 1}
-              className="btn-ghost"
-              style={{ fontSize: '1.25rem', padding: '0.375rem 0.875rem', opacity: page === totalPages - 1 ? 0.3 : 1 }}
-            >
-              →
-            </button>
-          </div>
-        )}
+              {/* Tabs */}
+              <PassportTabs
+                active={activeSection}
+                onChange={setActiveSection}
+                missionCount={unclaimedMissionsCount}
+                trophyCount={0}
+              />
 
-        {/* Redeem link */}
-        {user.offChainLeafs >= 10 && (
-          <div style={{ marginTop: '1.25rem' }}>
-            <Link
-              href="/leafpass/redeem"
-              className="btn-ghost"
-              style={{ width: '100%', textAlign: 'center', justifyContent: 'center' }}
-            >
-              💚 Converter {Math.round(user.offChainLeafs)} Folhas em tokens
-            </Link>
-          </div>
-        )}
+              {/* Tab Content */}
+              <div style={{ marginTop: '1.5rem', flex: 1 }}>
+                <AnimatePresence mode="wait">
+                  {activeSection === 'stamps' && (
+                    <motion.div
+                      key="stamps"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 20 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <StampCollection stamps={stamps} />
+                    </motion.div>
+                  )}
+
+                  {activeSection === 'trophies' && (
+                    <motion.div
+                      key="trophies"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 20 }}
+                      transition={{ duration: 0.2 }}
+                      style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}
+                    >
+                      {isLoadingData ? (
+                        <p style={{ textAlign: 'center', color: 'rgba(245,240,232,0.5)', padding: '2rem', fontFamily: 'var(--font-sans)', fontSize: '12px' }}>Carregando troféus...</p>
+                      ) : achievements.length > 0 ? (
+                        achievements.map((ach, i) => (
+                          <TrophyCard key={ach.id} trophy={ach} index={i} />
+                        ))
+                      ) : (
+                        <p style={{ textAlign: 'center', color: 'rgba(245,240,232,0.5)', fontFamily: 'var(--font-sans)', fontSize: '12px' }}>Nenhum troféu encontrado.</p>
+                      )}
+                    </motion.div>
+                  )}
+
+                  {activeSection === 'missions' && (
+                    <motion.div
+                      key="missions"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 20 }}
+                      transition={{ duration: 0.2 }}
+                      style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}
+                    >
+                      {isLoadingData ? (
+                        <p style={{ textAlign: 'center', color: 'rgba(245,240,232,0.5)', padding: '2rem', fontFamily: 'var(--font-sans)', fontSize: '12px' }}>Carregando missões...</p>
+                      ) : missions.length > 0 ? (
+                        missions.map((mission, i) => (
+                          <MissionCard
+                            key={mission.id}
+                            mission={mission}
+                            index={i}
+                            onClaim={handleClaimMission}
+                          />
+                        ))
+                      ) : (
+                        <p style={{ textAlign: 'center', color: 'rgba(245,240,232,0.5)', fontFamily: 'var(--font-sans)', fontSize: '12px' }}>Nenhuma missão ativa.</p>
+                      )}
+                    </motion.div>
+                  )}
+
+                  {activeSection === 'profile' && (
+                    <motion.div
+                      key="profile"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 20 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <div className="metric-card" style={{ padding: '2rem', textAlign: 'center' }}>
+                        <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>👤</div>
+                        <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.8rem', color: 'var(--leaf-gold-light)', marginBottom: '0.25rem' }}>
+                          {user.name}
+                        </h2>
+                        <p style={{ fontFamily: 'var(--font-sans)', color: 'rgba(245,240,232,0.6)', marginBottom: '2rem', fontSize: '14px' }}>{user.email}</p>
+                        
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                          <div style={{ background: 'rgba(245,240,232,0.05)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                            <p style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--leaf-gold)', fontWeight: 500, letterSpacing: '0.143px', textTransform: 'uppercase' }}>FOLHAS</p>
+                            <p style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', color: 'var(--leaf-cream)', marginTop: '4px' }}>{Math.round(user.offChainLeafs)}</p>
+                          </div>
+                          <div style={{ background: 'rgba(245,240,232,0.05)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                            <p style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--leaf-gold)', fontWeight: 500, letterSpacing: '0.143px', textTransform: 'uppercase' }}>CARIMBOS</p>
+                            <p style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', color: 'var(--leaf-cream)', marginTop: '4px' }}>{stamps.length}</p>
+                          </div>
+                        </div>
+
+                        {user.offChainLeafs >= 10 && (
+                          <div style={{ marginTop: '2rem' }}>
+                            <Link href="/app/redeem" className="btn-ghost" style={{ width: '100%', background: 'linear-gradient(135deg, var(--leaf-gold), var(--leaf-gold-light))', color: 'var(--leaf-ink)', border: 'none', padding: '12px', borderRadius: '8px', fontWeight: 700 }}>
+                              Converter Folhas em Tokens
+                            </Link>
+                          </div>
+                        )}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* FAB */}
-      <Link href="/leafpass/scan" className="fab" id="btn-scan-fab">
+      <Link 
+        href="/app/scan" 
+        className="fab"
+      >
         <span style={{ fontSize: '1.2rem' }}>📷</span>
         Escanear Local
       </Link>

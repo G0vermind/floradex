@@ -13,7 +13,7 @@ const ROUTE_MAP = {
 } as const
 
 // Rotas que exigem autenticação (qualquer role)
-const PROTECTED_PREFIXES = ["/admin", "/dashboard", "/leafpass", "/api/leafpass"]
+const PROTECTED_PREFIXES = ["/admin", "/dashboard", "/app", "/api/leafpass"]
 
 export default auth((req) => {
   const { nextUrl, auth: session } = req as NextRequest & { auth: any }

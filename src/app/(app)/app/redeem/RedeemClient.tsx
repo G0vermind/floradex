@@ -56,8 +56,8 @@ export default function RedeemClient({ balance, userName, projects }: RedeemClie
           zIndex: 40,
         }}
       >
-        <Link href="/leafpass" className="btn-ghost" style={{ fontSize: '0.9rem', padding: '0.4rem 0.75rem' }}>
-          ← Passaporte
+        <Link href="/app" className="btn-ghost" style={{ fontSize: '0.9rem', padding: '0.4rem 0.75rem' }}>
+          ← Voltar
         </Link>
         <div style={{ textAlign: 'right' }}>
           <p className="font-mono" style={{ fontSize: '0.65rem', color: 'rgba(245,240,232,0.5)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>

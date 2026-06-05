@@ -1,0 +1,46 @@
+/* ─────────────────────────────────────
+   FLORESTAS.SOCIAL — Design Tokens
+   Estética: Luxury Editorial × Natureza Orgânica
+   ───────────────────────────────────── */
+
+   :root {
+    /* Cores Primárias */
+    --forest-void:      #0D1F16;   /* fundo hero — verde quase preto */
+    --forest-deep:      #1B3A2D;   /* seções escuras */
+    --forest-mid:       #2D5A3D;   /* botões principais, destaques */
+    --forest-bright:    #4A7C59;   /* hover states, ícones */
+    --forest-mist:      #A8C5B0;   /* texto secundário sobre escuro */
+  
+    /* Cores de Contraste */
+    --gold-warm:        #C9A84C;   /* acentos dourados, preços, badges */
+    --gold-light:       #F0D080;   /* hover do dourado */
+    --cream-paper:      #F5F0E8;   /* fundo de seções claras */
+    --cream-dark:       #E8DFC8;   /* bordas e separadores no claro */
+    --ink-dark:         #1A1209;   /* texto sobre fundo claro */
+    --ink-mid:          #4A3F2F;   /* texto secundário sobre claro */
+  
+    /* Tipografia */
+    --font-display:     var(--font-display, 'Georgia', serif);    /* títulos — orgânico, editorial */
+    --font-body:        var(--font-body, system-ui, sans-serif); /* corpo — limpo, legível */
+    --font-mono:        var(--font-mono, monospace);          /* números, dados, códigos */
+  
+    /* Escala Tipográfica (mobile-first, clamp) */
+    --text-hero:        clamp(2.5rem, 6vw, 5rem);
+    --text-h2:          clamp(1.75rem, 3.5vw, 3rem);
+    --text-h3:          clamp(1.25rem, 2vw, 1.75rem);
+    --text-body-lg:     clamp(1rem, 1.5vw, 1.25rem);
+    --text-body:        1rem;
+    --text-sm:          0.875rem;
+  
+    /* Espaçamento de Seções */
+    --section-gap:      clamp(5rem, 10vw, 9rem);
+    --container-max:    1280px;
+    --container-pad:    clamp(1.25rem, 5vw, 3rem);
+  
+    /* Efeitos */
+    --shadow-card:      0 4px 32px rgba(13, 31, 22, 0.15);
+    --shadow-card-hover:0 12px 48px rgba(13, 31, 22, 0.25);
+    --radius-card:      1.25rem;
+    --radius-btn:       100px; /* pílula */
+    --transition-base:  all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
