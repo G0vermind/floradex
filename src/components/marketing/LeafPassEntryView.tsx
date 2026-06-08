@@ -71,13 +71,13 @@ export function LeafPassEntryView({ partner, inviteCode, rawFrom }: Props) {
       {/* ================= HERO SECTION (RESGATE) ================= */}
       <section className="relative flex flex-col items-center justify-center min-h-screen pt-32 pb-24 px-6 overflow-hidden">
         {/* Efeito de luz de fundo */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#FFA800]/5 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-[#FFA800]/5 rounded-full blur-[120px] pointer-events-none"></div>
 
         <div className="relative z-10 w-full max-w-4xl mx-auto text-center flex flex-col items-center">
           
           {partner && (
             <div className="inline-flex items-center gap-2 mb-8 px-5 py-2.5 rounded-full bg-[#FFA800]/10 border border-[#FFA800]/20 text-[#FFA800] text-sm font-bold backdrop-blur-sm">
-              <MapPin className="w-4 h-4 flex-shrink-0" />
+              <MapPin className="w-4 h-4 shrink-0" />
               <span>{partner.tradeName} <span className="opacity-40 mx-2">·</span> {partner.city}</span>
             </div>
           )}
@@ -91,7 +91,7 @@ export function LeafPassEntryView({ partner, inviteCode, rawFrom }: Props) {
           </p>
 
           {/* CAIXA MÁGICA DE RESGATE */}
-          <div className="w-full max-w-xl bg-white/[0.03] backdrop-blur-2xl border border-white/10 rounded-[2rem] p-8 md:p-12 shadow-2xl">
+          <div className="w-full max-w-xl bg-white/3 backdrop-blur-2xl border border-white/10 rounded-4xl p-8 md:p-12 shadow-2xl">
             <label className="block text-emerald-100 font-medium mb-4 text-lg text-left">
               Recebeu um código de recompensa?
             </label>
@@ -130,7 +130,7 @@ export function LeafPassEntryView({ partner, inviteCode, rawFrom }: Props) {
       </section>
 
       {/* ================= ESTATÍSTICAS (PROVA SOCIAL) ================= */}
-      <section className="py-16 bg-[#FFA800]/[0.02] border-y border-[#FFA800]/10">
+      <section className="py-16 bg-[#FFA800]/2 border-y border-[#FFA800]/10">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-center divide-y md:divide-y-0 md:divide-x divide-[#FFA800]/10">
           <div className="flex flex-col items-center pt-4 md:pt-0">
             <span className="text-5xl font-black text-[#FFA800] mb-2">+12k</span>
@@ -156,24 +156,24 @@ export function LeafPassEntryView({ partner, inviteCode, rawFrom }: Props) {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Card 1 */}
-          <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-10 flex flex-col items-center text-center hover:bg-white/[0.04] transition-colors">
-            <div className="w-16 h-16 rounded-full bg-[#FFA800]/10 flex items-center justify-center mb-8 flex-shrink-0">
+          <div className="bg-white/2 border border-white/5 rounded-3xl p-10 flex flex-col items-center text-center hover:bg-white/4 transition-colors">
+            <div className="w-16 h-16 rounded-full bg-[#FFA800]/10 flex items-center justify-center mb-8 shrink-0">
               <MapPin className="w-8 h-8 text-[#FFA800]" />
             </div>
             <h3 className="text-2xl font-bold text-white mb-4">1. Explore</h3>
             <p className="text-emerald-200/60 leading-relaxed">Visite estabelecimentos sustentáveis e escolas que fazem parte da rede Florestas.Social.</p>
           </div>
           {/* Card 2 */}
-          <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-10 flex flex-col items-center text-center hover:bg-white/[0.04] transition-colors">
-            <div className="w-16 h-16 rounded-full bg-[#FFA800]/10 flex items-center justify-center mb-8 flex-shrink-0">
+          <div className="bg-white/2 border border-white/5 rounded-3xl p-10 flex flex-col items-center text-center hover:bg-white/4 transition-colors">
+            <div className="w-16 h-16 rounded-full bg-[#FFA800]/10 flex items-center justify-center mb-8 shrink-0">
               <ScanLine className="w-8 h-8 text-[#FFA800]" />
             </div>
             <h3 className="text-2xl font-bold text-white mb-4">2. Capture</h3>
             <p className="text-emerald-200/60 leading-relaxed">Escaneie o QR Code no balcão ou digite o código da nota para capturar suas Folhas mágicas.</p>
           </div>
           {/* Card 3 */}
-          <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-10 flex flex-col items-center text-center hover:bg-white/[0.04] transition-colors">
-            <div className="w-16 h-16 rounded-full bg-[#FFA800]/10 flex items-center justify-center mb-8 flex-shrink-0">
+          <div className="bg-white/2 border border-white/5 rounded-3xl p-10 flex flex-col items-center text-center hover:bg-white/4 transition-colors">
+            <div className="w-16 h-16 rounded-full bg-[#FFA800]/10 flex items-center justify-center mb-8 shrink-0">
               <TreePine className="w-8 h-8 text-[#FFA800]" />
             </div>
             <h3 className="text-2xl font-bold text-white mb-4">3. Evolua</h3>
@@ -191,7 +191,7 @@ export function LeafPassEntryView({ partner, inviteCode, rawFrom }: Props) {
             </h2>
 
             <div className="flex gap-6">
-              <div className="mt-1 flex-shrink-0"><Target className="w-7 h-7 text-[#FFA800]" /></div>
+              <div className="mt-1 shrink-0"><Target className="w-7 h-7 text-[#FFA800]" /></div>
               <div>
                 <h4 className="text-xl font-bold text-white mb-2">Missões e Desafios</h4>
                 <p className="text-emerald-200/60">Complete tarefas criadas por marcas parceiras e veja a sua barra de evolução disparar.</p>
@@ -199,7 +199,7 @@ export function LeafPassEntryView({ partner, inviteCode, rawFrom }: Props) {
             </div>
 
             <div className="flex gap-6">
-              <div className="mt-1 flex-shrink-0"><Trophy className="w-7 h-7 text-[#FFA800]" /></div>
+              <div className="mt-1 shrink-0"><Trophy className="w-7 h-7 text-[#FFA800]" /></div>
               <div>
                 <h4 className="text-xl font-bold text-white mb-2">Troféus de Gemas</h4>
                 <p className="text-emerald-200/60">Da semente ao Diamante. Desbloqueie conquistas luxuosas que provam o seu compromisso ecológico.</p>
@@ -207,7 +207,7 @@ export function LeafPassEntryView({ partner, inviteCode, rawFrom }: Props) {
             </div>
 
             <div className="flex gap-6">
-              <div className="mt-1 flex-shrink-0"><TreePine className="w-7 h-7 text-[#FFA800]" /></div>
+              <div className="mt-1 shrink-0"><TreePine className="w-7 h-7 text-[#FFA800]" /></div>
               <div>
                 <h4 className="text-xl font-bold text-white mb-2">Rastreabilidade Real</h4>
                 <p className="text-emerald-200/60">Visualize exatamente onde as árvores que você ajudou a financiar estão sendo plantadas e cuidadas no mapa.</p>
@@ -216,7 +216,7 @@ export function LeafPassEntryView({ partner, inviteCode, rawFrom }: Props) {
           </div>
 
           {/* Placeholder Elegante para Imagem do App */}
-          <div className="w-full h-[600px] bg-gradient-to-br from-white/10 to-transparent rounded-[3rem] border border-white/10 flex items-center justify-center p-8 relative overflow-hidden">
+          <div className="w-full h-150 bg-linear-to-br from-white/10 to-transparent rounded-[3rem] border border-white/10 flex items-center justify-center p-8 relative overflow-hidden">
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
             <div className="text-center z-10">
               <Trophy className="w-20 h-20 text-white/20 mx-auto mb-4" />
@@ -234,7 +234,7 @@ export function LeafPassEntryView({ partner, inviteCode, rawFrom }: Props) {
         </div>
 
         <div className="flex flex-col gap-4">
-          <details className="group bg-white/[0.02] border border-white/5 rounded-2xl p-6 cursor-pointer hover:bg-white/[0.04] transition-colors">
+          <details className="group bg-white/2 border border-white/5 rounded-2xl p-6 cursor-pointer hover:bg-white/4 transition-colors">
             <summary className="text-lg font-bold text-white flex justify-between items-center list-none outline-none">
               <div className="flex items-center gap-3">
                 <HelpCircle className="w-5 h-5 text-[#FFA800]" /> Como ganho Folhas?
@@ -246,7 +246,7 @@ export function LeafPassEntryView({ partner, inviteCode, rawFrom }: Props) {
             </p>
           </details>
           
-          <details className="group bg-white/[0.02] border border-white/5 rounded-2xl p-6 cursor-pointer hover:bg-white/[0.04] transition-colors">
+          <details className="group bg-white/2 border border-white/5 rounded-2xl p-6 cursor-pointer hover:bg-white/4 transition-colors">
             <summary className="text-lg font-bold text-white flex justify-between items-center list-none outline-none">
               <div className="flex items-center gap-3">
                 <HelpCircle className="w-5 h-5 text-[#FFA800]" /> O aplicativo é gratuito?
@@ -258,7 +258,7 @@ export function LeafPassEntryView({ partner, inviteCode, rawFrom }: Props) {
             </p>
           </details>
 
-          <details className="group bg-white/[0.02] border border-white/5 rounded-2xl p-6 cursor-pointer hover:bg-white/[0.04] transition-colors">
+          <details className="group bg-white/2 border border-white/5 rounded-2xl p-6 cursor-pointer hover:bg-white/4 transition-colors">
             <summary className="text-lg font-bold text-white flex justify-between items-center list-none outline-none">
               <div className="flex items-center gap-3">
                 <HelpCircle className="w-5 h-5 text-[#FFA800]" /> As árvores são reais?
