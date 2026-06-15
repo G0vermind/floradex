@@ -1,13 +1,71 @@
-# 🌿 LeafPass - Plataforma de Engajamento Sustentável
+# 🌿 LeafPass + Social Forest Protocol
 
-**LeafPass** é uma plataforma que conecta marcas sustentáveis aos consumidores, transformando o plantio de árvores em uma ferramenta de fidelização, rastreável e sem fricção.
+<div align="center">
+
+**Plataforma de Engajamento Sustentável com Infraestrutura Blockchain Stellar**
+
+*System Error: The destruction of nature is profitable. We are fixing this bug with Programmable Prosperity.*
+
+[![Network: Stellar Soroban](https://img.shields.io/badge/Network-Stellar%20Soroban-7B6FEE?style=for-the-badge&logo=stellar&logoColor=white)](https://stellar.org)
+[![Contracts: Rust](https://img.shields.io/badge/Contracts-Rust-orange?style=for-the-badge&logo=rust&logoColor=white)](https://www.rust-lang.org/)
+[![Payments: x402](https://img.shields.io/badge/Payments-x402%20Protocol-00C2FF?style=for-the-badge)](https://www.x402.org/)
+[![Frontend: Next.js](https://img.shields.io/badge/Frontend-Next.js%2016-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-green.svg?style=for-the-badge)](LICENSE)
+
+</div>
+
+---
+
+## 🌍 A Missão: Prosperidade Programável
+
+A maioria das promessas de sustentabilidade param no marketing. Nós construímos a infraestrutura que as torna verificáveis.
+
+**LeafPass + Social Forest democratizam a sustentabilidade** conectando consumo cotidiano à regeneração ambiental real. Cada dólar gasto em uma marca parceira se torna patrimônio biológico — uma fração de uma árvore viva de Mogno Africano (*Khaya senegalensis*), ancorada na blockchain Stellar, pertencente à pessoa que a conquistou.
+
+Chamamos este modelo de **RWA como Serviço (RWAaaS)**: empresas não investem no ativo — elas usam nossa infraestrutura para distribuir cashback regenerativo aos seus clientes. O consumidor acumula tokens $LEAF e **forja um dNFT** — um NFT dinâmico que representa propriedade de uma árvore real e crescente. **A árvore pertence a quem a forja.**
+
+> **Vantagem competitiva única:** Controle total da cadeia de suprimentos física — desde o Viveiro Maravilha (mudas) até a Sómogno (processamento) — elimina risco de contraparte e garante a permanência de cada ativo on-chain.
+
+---
 
 ## 🎯 Objetivo do Projeto
 
-Transformar compensação ambiental em uma experiência engajadora onde:
-- **Empresas** podem oferecer recompensas sustentáveis aos seus clientes
-- **Consumidores** ganham "Leafs" (folhas) ao visitar parceiros e podem resgatar por árvores plantadas
-- **Projetos sociais** recebem apoio através do sistema de resgate
+Transformar compensação ambiental em uma experiência engajadora e verificável onde:
+
+- **Empresas** oferecem recompensas sustentáveis ($LEAF tokens) aos clientes via x402
+- **Consumidores** coletam Leafs visitando parceiros e **forjam dNFTs** representando árvores reais
+- **Projetos sociais** recebem apoio através do sistema de resgate com rastreabilidade blockchain
+- **Oráculos PoF** validam biomassa e carbono via IA e dados satelitais
+
+### Repositório Original do Protocolo
+
+Este projeto está vinculado ao [Social Forest Protocol](https://github.com/iaiamaga/social-forests-protocol), desenvolvido por [@iaiamaga](https://github.com/iaiamaga).
+
+🔗 **Ver protocolo completo:** https://github.com/iaiamaga/social-forests-protocol
+
+## ⚙️ Como Funciona: O Ciclo Principal
+
+| Ator | Ação & Proposta de Valor |
+|------|--------------------------|
+| 🏢 **Empresa (B2B)** | Entra via pagamento x402 USDC, compra frações de RWA (árvores reais de Mogno), e ganha impacto ESG verificável. Distribui tokens $LEAF como "Green Cashback" aos clientes. |
+| 🛰️ **Oráculo (PoF)** | IA e dados satelitais validam níveis de biomassa e carbono no mundo físico. Injeta dados de crescimento no dNFT via `process_oracle_report`. |
+| 🌱 **Consumidor (B2C)** | Ganha tokens $LEAF de marcas parceiras. Acumula folhas e **forja um dNFT** — um NFT dinâmico representando uma árvore real de Mogno Africano que cresce on-chain conforme a árvore física cresce. |
+
+### A Jornada do dNFT
+
+```
+Empresa compra RWA → Protocolo mint $LEAF → Consumidor ganha $LEAF
+                                              ↓
+                              Consumidor queima $LEAF → Forja dNFT (Tier 1)
+                                              ↓
+                              Oráculo alimenta dados de crescimento → dNFT evolui
+                                              ↓
+                              Consumidor funde dNFTs → Tier superior (Raro → Épico → Lendário)
+```
+
+Cada **dNFT** é um ativo digital vivo lastreado por uma árvore real. Ele rastreia biomassa, sequestro de carbono e fase biológica — tudo verificado on-chain pelo oráculo Proof of Flourishing.
+
+---
 
 ## ✨ Funcionalidades Principais
 
@@ -16,32 +74,75 @@ Transformar compensação ambiental em uma experiência engajadora onde:
 - 🏆 **Sistema de Conquistas**: 10 níveis de progressão (Bronze → Diamante)
 - 🎯 **Missões Diárias e Semanais**: Ganhe Leafs extras completando desafios
 - 🔍 **Scanner de QR Code**: Escaneie para ganhar recompensas
-- 💎 **Resgate Social**: Use seus Leafs para apoiar projetos ambientais
+- 💎 **Forjar dNFT**: Queime Leafs para criar NFTs dinâmicos de árvores reais
+- 🌳 **Evolução de dNFT**: Funda dNFTs para alcançar tiers superiores (Raro → Épico → Lendário)
 
 ### Para Empresas
 - 🏢 **Dashboard Empresarial**: Acompanhe o engajamento dos clientes
-- 📊 **Métricas de Impacto**: Veja árvores plantadas e biomas beneficiados
-- 🎫 **Campanhas Personalizadas**: Crie promoções com recompensas em Leafs
-- 🔗 **Integração com QR Code**: Sistema mensal automático de QR Codes
+- 📊 **Métricas de Impacto ESG**: Veja árvores plantadas, carbono sequestrado e biomas beneficiados
+- 🎫 **Campanhas Personalizadas**: Crie promoções com recompensas em $LEAF tokens
+- 🔗 **Integração x402**: Pagamentos automáticos via protocolo x402 (USDC na Stellar)
+- 🔐 **Rastreabilidade Blockchain**: Cada transação registrada na Stellar
 
 ### Para Administradores
 - 👥 **Gestão de Empresas**: Aprove e gerencie parceiros
 - 🌍 **Campanhas Globais**: Crie campanhas para toda a rede
-- 📈 **Analytics**: Dashboard completo de métricas da plataforma
+- 📈 **Analytics Completo**: Dashboard de métricas da plataforma e impacto ambiental
+- 🛰️ **Gestão de Oráculos**: Configure validação de dados de biomassa e carbono
 
 ## 🏗️ Arquitetura Técnica
 
-### Stack Tecnológico
-- **Framework**: Next.js 16+ (App Router)
-- **Linguagem**: TypeScript
-- **Banco de Dados**: SQLite (dev) / PostgreSQL (prod) via Prisma
-- **Autenticação**: NextAuth v5 (Auth.js)
-- **Estilização**: Tailwind CSS v4
-- **Animações**: Framer Motion
-- **Pagamentos**: Stripe
-- **QR Code**: html5-qrcode, qrcode.react
+### Stack Tecnológico Híbrido
 
-### Estrutura do Projeto
+| Camada | Tecnologia |
+|--------|-----------|
+| **Smart Contracts** | Rust · soroban-sdk 26.0.0 · `#![forbid(unsafe_code)]` |
+| **Blockchain** | Stellar Soroban (Testnet) |
+| **Pagamentos** | x402 Protocol (USDC on Stellar) via OpenZeppelin Facilitator |
+| **Ponte RWA** | Etherfuse Stablebonds *(stub — em progresso)* |
+| **Frontend** | Next.js 16 · React 19 · TailwindCSS 4 · Framer Motion |
+| **Wallet** | Freighter API v6 |
+| **Banco de Dados** | SQLite (dev) / PostgreSQL (prod) via Prisma |
+| **Autenticação** | NextAuth v5 (Auth.js) |
+| **QR Code** | html5-qrcode, qrcode.react |
+| **CI/CD** | GitHub Actions (cargo test, WASM build, gitleaks, Next.js build) |
+
+### Contratos Inteligentes (Soroban)
+
+Seis contratos modulares em Rust implantados na Stellar Soroban (SDK v26.0.0):
+
+| Contrato | Função | Status |
+|----------|--------|--------|
+| `leaf_token` | **Token $LEAF (SEP-41).** Token fungível com mint/burn/transfer. Limite de 1B supply. Transferência admin em 2 passos. Balances com TTL gerenciado. | ✅ Testnet |
+| `guardian_id` | **SBT do Consumidor.** Token de reputação Soulbound — XP, níveis (1-50), 7 eras biológicas. Intransferível. | ✅ Testnet |
+| `company_id` | **SBT da Empresa.** Identidade institucional — saldo C-Cred, C-Debt, badges ODS, verificação Vereda. | ✅ Testnet |
+| `collateral_vault` | **Marketplace DeFi.** Gerencia inventário físico (mudas), trading C-Cred entre empresas, liquidação de dívidas. | ✅ Testnet |
+| `forest_mythos_vault` | **Engine dNFT.** NFTs dinâmicos representando árvores reais — mint, forge (merge), relatórios de crescimento do oráculo, lock anti-flip de 90 dias, evolução de tier. | ✅ Testnet |
+| `journey_orchestrator` | **Maestro.** Orquestra todos os contratos — onboarding B2B, plant_tree B2C, forge_mythos. Ponto único de entrada para fluxos complexos. | ✅ Testnet |
+
+### Grafo de Interação dos Contratos
+
+```
+                    ┌─────────────────────────┐
+                    │  journey_orchestrator    │
+                    │  (Maestro)              │
+                    └──────┬──────┬──────┬────┘
+                           │      │      │
+              ┌────────────┘      │      └────────────┐
+              ▼                   ▼                    ▼
+     ┌────────────────┐  ┌──────────────┐  ┌─────────────────┐
+     │  leaf_token    │  │ guardian_id  │  │ forest_mythos   │
+     │  ($LEAF)       │  │ (XP/SBT)    │  │ (dNFT Engine)   │
+     └────────────────┘  └──────────────┘  └─────────────────┘
+              ▲
+              │
+     ┌────────────────┐       ┌──────────────┐
+     │collateral_vault│──────▶│  company_id  │
+     │ (DeFi/C-Cred) │       │ (SBT Empresa)│
+     └────────────────┘       └──────────────┘
+```
+
+### Estrutura do Projeto (Frontend + Backend)
 ```
 /workspace
 ├── prisma/
