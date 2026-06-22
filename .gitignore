@@ -78,3 +78,7 @@ dmypy.json
 *.deb
 *.zst
 ```
+# Next.js
+.next/
+next-env.d.ts
+tsconfig.tsbuildinfo
