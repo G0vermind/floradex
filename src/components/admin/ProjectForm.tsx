@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { createProject } from '@/app/actions/projects'
+import { createProject } from '@/actions/projects'
 
 export default function ProjectForm() {
   const router = useRouter()

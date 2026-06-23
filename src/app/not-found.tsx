@@ -24,9 +24,9 @@ export default function NotFound() {
       <p style={{ color: 'rgba(245,240,232,0.6)', maxWidth: '320px' }}>
         Esta rota não existe no seu passaporte. Volte ao início e continue explorando.
       </p>
-      <Link href="/leafpass" className="btn-primary">
-        ← Voltar ao Passaporte
-      </Link>
+        <Link href="/floradex" className="btn-primary">
+          Voltar ao Início
+        </Link>
     </main>
   )
 }

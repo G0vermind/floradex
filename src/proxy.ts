@@ -9,11 +9,11 @@ const { auth } = NextAuth(authConfig)
 const ROUTE_MAP = {
   ADMIN:   "/admin",
   COMPANY: "/dashboard/empresa",
-  USER:    "/leafpass",
+  USER:    "/floradex",
 } as const
 
 // Rotas que exigem autenticação (qualquer role)
-const PROTECTED_PREFIXES = ["/admin", "/dashboard", "/app", "/api/leafpass"]
+const PROTECTED_PREFIXES = ["/admin", "/dashboard", "/app", "/api/game"]
 
 export default auth((req) => {
   const { nextUrl, auth: session } = req as NextRequest & { auth: any }
@@ -31,17 +31,17 @@ export default auth((req) => {
   // Redireciona da raiz ou de telas de login para a rota correta se já logado
   if (session && (pathname === "/" || pathname === "/login" || pathname === "/portal/login")) {
     const role = session.user?.role
-    const destination = ROUTE_MAP[role as keyof typeof ROUTE_MAP] ?? "/leafpass"
+    const destination = ROUTE_MAP[role as keyof typeof ROUTE_MAP] ?? "/floradex"
     return NextResponse.redirect(new URL(destination, nextUrl.origin))
   }
 
   // Bloqueia acesso de USER a rotas de ADMIN/COMPANY
   if (session?.user?.role === "USER" && pathname.startsWith("/admin")) {
-    return NextResponse.redirect(new URL("/leafpass", nextUrl.origin))
+    return NextResponse.redirect(new URL("/floradex", nextUrl.origin))
   }
 
   if (session?.user?.role === "USER" && pathname.startsWith("/dashboard")) {
-    return NextResponse.redirect(new URL("/leafpass", nextUrl.origin))
+    return NextResponse.redirect(new URL("/floradex", nextUrl.origin))
   }
 
   return NextResponse.next()

@@ -81,6 +81,10 @@ model User {
   achievements  UserAchievement[]
   userMissions  UserMission[]
   projectRedemptions RedemptionHistory[]
+  
+  // Game Web2.5
+  inventories   UserInventory[]
+  board         MatrizBoard?
 }
 
 // ─────────────────────────────────────────
@@ -277,4 +281,64 @@ model RedemptionHistory {
 
   user    User          @relation(fields: [userId], references: [id])
   project SocialProject @relation(fields: [projectId], references: [id])
+}
+
+// ─────────────────────────────────────────
+// JOGO DA SIMBIOSE (WEB2.5 TCG)
+// ─────────────────────────────────────────
+
+model SymbioticElement {
+  id             Int      @id // IDs manuais ex: 101, 201
+  name           String
+  scientificName String
+  description    String
+  kingdom        String   // flora | fungi | pollinator
+  rarity         String   // common | rare | legendary
+  emoji          String
+  theme          String   // theme color key
+  bonusEffect    String
+  nurtureDesc    String
+  createdAt      DateTime @default(now())
+
+  usersInventories UserInventory[]
+  boardSlots       BoardSlot[]
+}
+
+model UserInventory {
+  id        String   @id @default(cuid())
+  userId    String
+  elementId Int
+  amount    Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  element SymbioticElement @relation(fields: [elementId], references: [id])
+
+  @@unique([userId, elementId])
+}
+
+model MatrizBoard {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  dnftId       String?  
+  baseBiomass  Float    @default(12.5)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user  User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  slots BoardSlot[]
+}
+
+model BoardSlot {
+  id        String   @id @default(cuid())
+  boardId   String
+  kingdom   String   // flora | fungi | pollinator
+  elementId Int
+  equippedAt DateTime @default(now())
+
+  board   MatrizBoard      @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  element SymbioticElement @relation(fields: [elementId], references: [id])
+
+  @@unique([boardId, kingdom])
 }

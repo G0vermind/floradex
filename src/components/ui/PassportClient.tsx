@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { logout } from '@/app/actions/auth'
+import { logout } from '@/actions/auth'
 import type { StampData } from '@/components/ui/PassportPage'
 import PassportCover from './passport/PassportCover'
 import PassportTabs, { type PassportSection } from './passport/PassportTabs'
@@ -33,8 +33,8 @@ export default function PassportClient({ user, stamps }: PassportClientProps) {
     if (isOpen && achievements.length === 0 && missions.length === 0) {
       setIsLoadingData(true)
       Promise.all([
-        fetch('/api/leafpass/achievements').then(res => res.json()),
-        fetch('/api/leafpass/missions').then(res => res.json())
+        fetch('/api/game/achievements').then(res => res.json()),
+        fetch('/api/game/missions').then(res => res.json())
       ]).then(([achData, missData]) => {
         if (Array.isArray(achData)) setAchievements(achData)
         if (Array.isArray(missData)) setMissions(missData)
@@ -48,7 +48,7 @@ export default function PassportClient({ user, stamps }: PassportClientProps) {
 
   const handleClaimMission = async (missionId: string) => {
     try {
-      const res = await fetch('/api/leafpass/missions', {
+      const res = await fetch('/api/game/missions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ missionId }),

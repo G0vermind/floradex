@@ -2,7 +2,7 @@
 
 import { useActionState } from 'react'
 import Link from 'next/link'
-import { signup, type AuthState } from '@/app/actions/auth'
+import { signup, type AuthState } from '@/actions/auth'
 
 export default function RegisterPage() {
   const [state, action, pending] = useActionState<AuthState, FormData>(signup, undefined)

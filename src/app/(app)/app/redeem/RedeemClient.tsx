@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { redeemProject } from '@/app/actions/projects'
+import { redeemProject } from '@/actions/projects'
 import { QRCodeSVG } from 'qrcode.react'
 
 interface SocialProject {

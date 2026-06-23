@@ -94,7 +94,7 @@ export default function ScanPage() {
     const geo = await getLocation()
 
     try {
-      const res = await fetch('/api/leafpass/scan', {
+      const res = await fetch('/api/game/scan', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ qrSecret, ...geo }),

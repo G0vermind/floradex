@@ -19,8 +19,8 @@ export default function NavBar() {
   const navLinks = [
     { name: 'Como Funciona', href: '#como-funciona' },
     { name: 'Planos', href: '#planos' },
-    { name: 'Para Empresas', href: '#para-empresas' },
-    { name: 'Para Usuários', href: '/leafpass' },
+    { name: 'Para Empresas', href: '/portal/login' },
+    { name: 'Para Usuários', href: '/floradex' },
   ]
 
   return (
