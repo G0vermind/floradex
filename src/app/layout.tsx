@@ -2,16 +2,33 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'LeafPass — Passaporte de Fidelidade Local',
-  description:
-    'Visite estabelecimentos parceiros, colecione carimbos e ganhe Folhas para converter em tokens Stellar. Turismo consciente e engajamento comunitário.',
-  keywords: ['leafpass', 'folhas', 'passaporte', 'fidelidade', 'ecoturismo', 'stellar', 'florestas.social'],
+  title: 'FloraDex - Interface de Bioengenharia e Simbiose RWA',
+  description: 'FloraDex - Interface de Bioengenharia e Simbiose RWA',
+  keywords: ['floradex', 'folhas', 'passaporte', 'fidelidade', 'ecoturismo', 'stellar', 'florestas.social'],
   openGraph: {
-    title: 'LeafPass',
-    description: 'Seu passaporte de fidelidade regional',
+    title: 'FloraDex',
+    description: 'Interface de Bioengenharia e Simbiose RWA',
     type: 'website',
   },
 }
+
+import { Outfit, Playfair_Display, Rajdhani } from 'next/font/google'
+
+const outfit = Outfit({ 
+  subsets: ['latin'], 
+  variable: '--font-outfit' 
+})
+
+const playfair = Playfair_Display({ 
+  subsets: ['latin'], 
+  variable: '--font-playfair' 
+})
+
+const rajdhani = Rajdhani({ 
+  weight: ['400', '500', '600', '700'],
+  subsets: ['latin'], 
+  variable: '--font-rajdhani' 
+})
 
 export default function RootLayout({
   children,
@@ -19,15 +36,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" className={`${outfit.variable} ${playfair.variable} ${rajdhani.variable}`}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <meta name="theme-color" content="#1B3A2D" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <meta name="theme-color" content="#031F14" />
       </head>
-      <body>
-        <div style={{ position: 'relative', zIndex: 1 }}>
+      <body className="font-sans antialiased text-slate-200 bg-slate-900">
+        <div style={{ position: 'relative', zIndex: 1, height: '100dvh' }}>
           {children}
         </div>
       </body>

@@ -1,4 +1,6 @@
-# 🌿 LeafPass + Social Forest Protocol
+# 🌿 FloraDex
+
+A interface B2C do protocolo Florestas.Social. Um Tabuleiro de Cristalização (Board UI) sob a estética Solarpunk Premium, onde utilizadores resgatam $LEAF, abrem Pacotes Simbióticos (Flora, Fungi, Polinizadores) e forjam dNFTs reais de Mogno Africano ancorados na rede Stellar.
 
 <div align="center">
 
@@ -13,18 +15,6 @@
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-green.svg?style=for-the-badge)](LICENSE)
 
 </div>
-
----
-
-## 🌍 A Missão: Prosperidade Programável
-
-A maioria das promessas de sustentabilidade param no marketing. Nós construímos a infraestrutura que as torna verificáveis.
-
-**LeafPass + Social Forest democratizam a sustentabilidade** conectando consumo cotidiano à regeneração ambiental real. Cada dólar gasto em uma marca parceira se torna patrimônio biológico — uma fração de uma árvore viva de Mogno Africano (*Khaya senegalensis*), ancorada na blockchain Stellar, pertencente à pessoa que a conquistou.
-
-Chamamos este modelo de **RWA como Serviço (RWAaaS)**: empresas não investem no ativo — elas usam nossa infraestrutura para distribuir cashback regenerativo aos seus clientes. O consumidor acumula tokens $LEAF e **forja um dNFT** — um NFT dinâmico que representa propriedade de uma árvore real e crescente. **A árvore pertence a quem a forja.**
-
-> **Vantagem competitiva única:** Controle total da cadeia de suprimentos física — desde o Viveiro Maravilha (mudas) até a Sómogno (processamento) — elimina risco de contraparte e garante a permanência de cada ativo on-chain.
 
 ---
 
